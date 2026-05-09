@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نوتة الورد – عباس إبراهيم</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1a0f;
+    --surface: #162016;
+    --surface2: #1e2e1e;
+    --green: #4caf7a;
+    --green-light: #7dd4a0;
+    --green-dim: #2d5a3d;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --text: #e8f5e8;
+    --text-dim: #7a9a7a;
+    --red: #e06060;
+    --blue: #6ab4ff;
+    --orange: #ff9966;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Tajawal', sans-serif; min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 10%, rgba(76,175,122,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 90%, rgba(201,168,76,0.05) 0%, transparent 50%);
+  }
+  header {
+    text-align: center; padding: 1.5rem 1rem 1rem;
+    border-bottom: 1px solid var(--green-dim);
+    background: linear-gradient(180deg, rgba(76,175,122,0.08) 0%, transparent 100%);
+  }
+  header h1 { font-family:'Amiri',serif; font-size:1.8rem; color:var(--green-light); }
+  header p { color:var(--text-dim); font-size:0.82rem; margin-top:0.3rem; }
+
+  /* شريط الأوتار */
+  .tuning-bar {
+    display: flex; justify-content: center; align-items: stretch;
+    border-bottom: 1px solid var(--green-dim); overflow-x: auto;
+    background: var(--surface);
+  }
+  .watar {
+    flex: 1; min-width: 60px; text-align: center;
+    padding: 0.5rem 0.3rem; border-left: 1px solid var(--green-dim);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .watar:last-child { border-left: none; }
+  .watar .num { font-size: 0.65rem; color: var(--text-dim); }
+  .watar .note { font-size: 1rem; font-weight: 700; font-family:'Amiri',serif; }
+  .watar .loc { font-size: 0.6rem; color: var(--text-dim); }
+  .w1 .note { color: #e07070; }
+  .w2 .note { color: #e09050; }
+  .w3 .note { color: #c9a84c; }
+  .w4 .note { color: #7dd4a0; }
+  .w5 .note { color: #6ab4ff; }
+  .w6 .note { color: #b088ff; }
+
+  .legend {
+    display:flex; justify-content:center; gap:1rem;
+    padding:0.45rem; background:var(--surface);
+    border-bottom:1px solid #1a2a1a; font-size:0.72rem;
+    color:var(--text-dim); flex-wrap:wrap;
+  }
+
+  .container { max-width:720px; margin:0 auto; padding:1rem; }
+
+  .section {
+    margin-bottom:1.2rem; border-radius:10px; overflow:hidden;
+    border:1px solid var(--green-dim); animation:fadeIn 0.35s ease both;
+  }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+
+  .sec-head {
+    background:linear-gradient(90deg,var(--surface2),var(--surface));
+    padding:0.55rem 1rem;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid var(--green-dim);
+  }
+  .sec-title { font-family:'Amiri',serif; font-size:1rem; color:var(--green-light); }
+  .sec-tag { font-size:0.62rem; color:var(--text-dim); background:rgba(76,175,122,0.1); padding:2px 6px; border-radius:3px; }
+  .sec-body { background:var(--surface); padding:0.9rem; }
+
+  .lyric-block {
+    margin-bottom:1rem; border-right:3px solid var(--green-dim); padding-right:0.8rem;
+  }
+  .lyric-text {
+    font-family:'Amiri',serif; font-size:1.1rem; color:var(--gold-light);
+    margin-bottom:0.6rem; line-height:1.7;
+  }
+  .madd {
+    color:var(--green-light); font-size:0.72rem;
+    background:rgba(76,175,122,0.15); padding:1px 5px; border-radius:3px;
+    margin-right:4px; font-family:'Tajawal',sans-serif; vertical-align:middle;
+  }
+
+  /* ===== التبلاتشر ===== */
+  .tab { direction:ltr; margin-top:0.5rem; }
+
+  .tab-grid {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+
+  .slabel {
+    text-align: right;
+    padding-left: 6px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    font-family: 'Tajawal', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    direction: rtl;
+  }
+  .w1c { color: #e07070; }
+  .w2c { color: #e09050; }
+  .w3c { color: #c9a84c; }
+  .w4c { color: #7dd4a0; }
+  .w5c { color: #6ab4ff; }
+  .w6c { color: #b088ff; }
+
+  .sline {
+    display:flex; align-items:center;
+    border-bottom:1px solid var(--green-dim);
+    padding:1px 0; min-height:22px;
+  }
+
+  .beat {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:19px; font-size:0.75rem; font-weight:700;
+    border-radius:3px; margin:0 1px;
+  }
+  .beat.p { background:var(--gold); color:#0f1a0f; }        /* مضغوط */
+  .beat.o { background:#3a7acc; color:#fff; }                /* مفتوح */
+  .beat.h { background:#a03030; color:#fff; }                /* نصف - مي♭ سي♭ */
+  .beat.r { color:var(--text-dim); background:transparent; font-size:0.65rem; } /* راحة */
+
+  .div { width:2px; height:15px; background:var(--green-dim); margin:0 4px; display:inline-block; vertical-align:middle; }
+
+  .notes-line { font-size:0.72rem; color:var(--text-dim); margin-top:4px; direction:rtl; }
+  .notes-line strong { color:var(--green-light); }
+  .notes-line .warn { color:var(--red); }
+
+  .strokes {
+    display:flex; gap:3px; margin-top:0.5rem; flex-wrap:wrap; align-items:center;
+  }
+  .strokes span { font-size:0.7rem; color:var(--text-dim); margin-left:4px; }
+  .st {
+    width:22px; height:22px; border-radius:3px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:0.9rem; font-weight:700;
+  }
+  .st.d { background:rgba(58,122,204,0.2); color:var(--blue); border:1px solid #2a4060; }
+  .st.u { background:rgba(192,80,48,0.2); color:var(--orange); border:1px solid #604030; }
+
+  .interlude {
+    background:var(--surface2); border:1px dashed var(--green-dim);
+    border-radius:8px; padding:0.6rem 1rem;
+    text-align:center; color:var(--text-dim);
+    font-size:0.8rem; margin-bottom:1.2rem;
+  }
+  .interlude .icon { font-size:1.2rem; margin-bottom:3px; }
+
+  /* دليل الدساتين */
+  .fret-guide {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:0.5rem; margin-top:0.8rem;
+  }
+  .fcard {
+    background:var(--surface2); border:1px solid var(--green-dim);
+    border-radius:6px; padding:0.5rem 0.7rem;
+  }
+  .fcard .fname { font-weight:700; margin-bottom:4px; font-size:0.82rem; }
+  .fcard .frets { font-size:0.7rem; color:var(--text-dim); line-height:1.8; direction:ltr; }
+  .fcard .frets span { color:var(--gold-light); font-weight:700; margin-left:3px; }
+
+  .tips {
+    background:rgba(76,175,122,0.05); border:1px solid var(--green-dim);
+    border-radius:8px; padding:0.9rem; margin-top:0.5rem;
+    font-size:0.8rem; line-height:1.9; color:var(--text-dim);
+  }
+  .tips h3 { color:var(--green-light); margin-bottom:0.4rem; font-size:0.88rem; }
+  .tips li { margin-right:1rem; margin-bottom:3px; list-style:disc; }
+
+  footer {
+    text-align:center; padding:1.5rem;
+    color:var(--green-dim); font-size:0.7rem; font-family:'Amiri',serif;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌹 الورد – عباس إبراهيم</h1>
+  <p>نوتة عود كاملة مع الكلمات · مقام البياتي على ري · 430 Hz · للمبتدئين</p>
+</header>
+
+<!-- شريط الأوتار -->
+<div class="tuning-bar">
+  <div class="watar w1">
+    <div class="num">و١</div>
+    <div class="note">فا</div>
+    <div class="loc">↑ ذقنك</div>
+  </div>
+  <div class="watar w2">
+    <div class="num">و٢</div>
+    <div class="note">لا</div>
+    <div class="loc"></div>
+  </div>
+  <div class="watar w3">
+    <div class="num">و٣</div>
+    <div class="note">ري</div>
+    <div class="loc"></div>
+  </div>
+  <div class="watar w4">
+    <div class="num">و٤</div>
+    <div class="note">صول</div>
+    <div class="loc"></div>
+  </div>
+  <div class="watar w5">
+    <div class="num">و٥</div>
+    <div class="note">دو</div>
+    <div class="loc"></div>
+  </div>
+  <div class="watar w6">
+    <div class="num">و٦</div>
+    <div class="note">فا</div>
+    <div class="loc">↓ رجلك</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span style="color:var(--gold);font-weight:700;">0</span> = وتر مفتوح بدون ضغط &nbsp;
+  <span style="color:var(--gold);font-weight:700;">1·2·3·4</span> = رقم الدستان &nbsp;
+  <span style="background:#a03030;color:#fff;padding:1px 5px;border-radius:3px;font-size:0.7rem;">♭</span> = نصف بين دستانين &nbsp;
+  <span style="color:var(--blue);">↓</span> نزلة &nbsp;
+  <span style="color:var(--orange);">↑</span> طلعة
+</div>
+
+<div class="container">
+
+  <!-- دليل الدساتين -->
+  <div class="section" style="animation-delay:0s">
+    <div class="sec-head">
+      <span class="sec-title">📌 دليل الدساتين – ارجع له دائماً</span>
+      <span class="sec-tag">مرجع</span>
+    </div>
+    <div class="sec-body">
+      <div class="fret-guide">
+        <div class="fcard">
+          <div class="fname w1c">و١ – فا (ذقنك)</div>
+          <div class="frets">
+            <span>0</span>= فا &nbsp;
+            <span>1</span>= صول &nbsp;
+            <span>2</span>= لا &nbsp;
+            <span>3</span>= سي♭ &nbsp;
+            <span>4</span>= سي
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="fname w2c">و٢ – لا</div>
+          <div class="frets">
+            <span>0</span>= لا &nbsp;
+            <span>1</span>= سي♭ &nbsp;
+            <span>2</span>= سي &nbsp;
+            <span>3</span>= دو &nbsp;
+            <span>4</span>= دو#
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="fname w3c">و٣ – ري</div>
+          <div class="frets">
+            <span>0</span>= ري &nbsp;
+            <span>1</span>= مي♭ &nbsp;
+            <span>2</span>= مي &nbsp;
+            <span>3</span>= فا &nbsp;
+            <span>4</span>= فا#
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="fname w4c">و٤ – صول</div>
+          <div class="frets">
+            <span>0</span>= صول &nbsp;
+            <span>1</span>= صول# &nbsp;
+            <span>2</span>= لا &nbsp;
+            <span>3</span>= سي♭ &nbsp;
+            <span>4</span>= سي
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="fname w5c">و٥ – دو</div>
+          <div class="frets">
+            <span>0</span>= دو &nbsp;
+            <span>1</span>= دو# &nbsp;
+            <span>2</span>= ري &nbsp;
+            <span>3</span>= مي♭ &nbsp;
+            <span>4</span>= مي
+          </div>
+        </div>
+        <div class="fcard">
+          <div class="fname w6c">و٦ – فا (رجلك)</div>
+          <div class="frets">
+            <span>0</span>= فا &nbsp;
+            <span>1</span>= صول &nbsp;
+            <span>2</span>= لا &nbsp;
+            <span>3</span>= سي♭ &nbsp;
+            <span>4</span>= سي
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--text-dim);margin-top:0.8rem;text-align:center;">
+        الأصابع: السبابة=١ · الوسطى=٢ · البنصر=٣ · الخنصر=٤
+      </p>
+    </div>
+  </div>
+
+  <!-- المقدمة الموسيقية -->
+  <div class="section" style="animation-delay:0.04s">
+    <div class="sec-head">
+      <span class="sec-title">🎵 المقدمة الموسيقية</span>
+      <span class="sec-tag">بداية</span>
+    </div>
+    <div class="sec-body">
+      <div class="lyric-block">
+        <p class="notes-line" style="margin-bottom:6px;">جملة ١ – صعود البياتي على وتر ري:</p>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w1c">و١ فا</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w2c">و٢ لا</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat o">0</span><span class="beat h">1</span><span class="beat p">3</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>ري – مي♭ – فا | ري – مي</strong></p>
+
+        <p class="notes-line" style="margin:10px 0 6px;">جملة ٢ – الصعود للصول ثم النزول:</p>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا | صول – لا – سي♭</strong></p>
+
+        <p class="notes-line" style="margin:10px 0 6px;">جملة ٣ – النزول للقرار ري:</p>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا – صول | ري ◀ وقف</strong></p>
+
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الشطر الأول -->
+  <div class="section" style="animation-delay:0.08s">
+    <div class="sec-head">
+      <span class="sec-title">الشطر الأول</span>
+      <span class="sec-tag">الكوبليه ١</span>
+    </div>
+    <div class="sec-body">
+
+      <div class="lyric-block">
+        <div class="lyric-text">ذي ريحة الورد والا <span class="madd">يمد: والا↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat h">1</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي♭ – ري | صول – لا ↗</strong></p>
+        <p class="notes-line">ذي&nbsp; ري&nbsp; حة&nbsp; الـ | ورد&nbsp; وا&nbsp; لا ↗↗</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">أنفاس محبوبي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat h">1</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا – صول | مي♭</strong></p>
+        <p class="notes-line">أن&nbsp; فاس&nbsp; مح&nbsp; | بو&nbsp; بي</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">هاذي القناديل والا</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat o">0</span><span class="beat h">1</span><span class="beat p">3</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>ري – مي♭ – فا | صول – لا</strong></p>
+        <p class="notes-line">هاذي&nbsp; القنا&nbsp; | دي&nbsp; ل&nbsp; وا&nbsp; لا</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">وجنة الغالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا – صول | ري ◀ وقف</strong></p>
+        <p class="notes-line">وج&nbsp; نة&nbsp; ال&nbsp; | غا&nbsp; لي</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st d">↓</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">الغالي اللي يعطر</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat o">0</span><span class="beat h">1</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>ري – مي♭ | صول – لا</strong></p>
+        <p class="notes-line">الغا&nbsp; لي&nbsp; | اللي&nbsp; يع&nbsp; طر</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">بالوفا دروبي <span class="madd">يمد: دروبي↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا | فا ↗↗</strong></p>
+        <p class="notes-line">بالوفا&nbsp; در&nbsp; | روـ&nbsp; بي ↗</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">لا جابه الحظ كل الوقت يحلالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي – ري | صول – لا | ري ◀ وقف طويل</strong></p>
+        <p class="notes-line">لا&nbsp; جا&nbsp; به&nbsp; | الحظ&nbsp; كل&nbsp; | الوقت&nbsp; يح&nbsp; لا&nbsp; لي</p>
+        <p class="notes-line"><span class="warn">★ السطر الأطول – تنفس بعد "الحظ"</span></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- إعادة + موسيقى -->
+  <div class="interlude">
+    <div class="icon">🔁</div>
+    إعادة الشطر الأول كاملاً · ثم فاصل موسيقي (نفس المقدمة)
+  </div>
+
+  <!-- الشطر الثاني -->
+  <div class="section" style="animation-delay:0.12s">
+    <div class="sec-head">
+      <span class="sec-title">الشطر الثاني</span>
+      <span class="sec-tag">الكوبليه ٢</span>
+    </div>
+    <div class="sec-body">
+
+      <div class="lyric-block">
+        <div class="lyric-text">مغرور لا من تبسم</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat h">1</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي♭ – ري | صول</strong></p>
+        <p class="notes-line">مغ&nbsp; رور&nbsp; لا&nbsp; | من&nbsp; تب&nbsp; سم</p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">والتفت صوبي <span class="madd">يمد: صوبي↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا | فا ↗↗</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">كن السحايب تغازلني أنا لحالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي – ري | صول – لا | ري ◀ وقف</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">له وضعه الخاص بأحزاني وبأسلوبي <span class="madd">يمد: وبأسلوبي↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat o">0</span><span class="beat p">2</span><span class="beat p">3</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>صول – لا – سي♭ | فا ↗↗</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">راقي بطبعه وعندي منزله عالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي – ري | صول – لا | ري ◀ وقف طويل</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- فاصل لازمة -->
+  <div class="interlude">
+    <div class="icon">🎵</div>
+    فاصل – لازمة الأغنية الرئيسية + موسيقى (نفس المقدمة)
+  </div>
+
+  <!-- الشطر الثالث -->
+  <div class="section" style="animation-delay:0.16s">
+    <div class="sec-head">
+      <span class="sec-title">الشطر الثالث</span>
+      <span class="sec-tag">الكوبليه ٣</span>
+    </div>
+    <div class="sec-body">
+
+      <div class="lyric-block">
+        <div class="lyric-text">مرات يزعل وأحس</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat h">1</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي♭ – ري | صول</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">أن القلق ثوبي <span class="madd">يمد: ثوبي↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>سي♭ – لا | فا ↗↗</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">ومرات يقبل وأشوف أن السما ظلالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat p">2</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي – ري | صول – لا | ري ◀ وقف</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">شفاف قلبي وهاذي أجمل عيوبي <span class="madd">يمد: عيوبي↗</span></div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat o">0</span><span class="beat p">2</span><span class="beat p">3</span><span class="div"></span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat p">3</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>صول – لا – سي♭ | فا ↗↗</strong></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st u">↑</div>
+        </div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-text">وأنا بقلبي أشيل المر والحالي</div>
+        <div class="tab">
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat p">3</span><span class="beat p">2</span><span class="beat o">0</span><span class="div"></span><span class="beat r">—</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w4c">و٤ صول</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+          <div class="tab-grid">
+            <div class="slabel w3c">و٣ ري</div>
+            <div class="sline"><span class="beat r">—</span><span class="beat r">—</span><span class="beat r">—</span><span class="div"></span><span class="beat o">0</span><span class="beat r">—</span></div>
+          </div>
+        </div>
+        <p class="notes-line"><strong>فا – مي – ري | صول | ري ◀ وقف طويل جداً</strong></p>
+        <p class="notes-line"><span class="warn">★ نهاية الأغنية – اتركها تتردد</span></p>
+        <div class="strokes">
+          <span>الريشة:</span>
+          <div class="st d">↓</div><div class="st u">↑</div><div class="st d">↓</div><div class="st d">↓</div><div class="st d">↓</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="tips">
+    <h3>💡 نصائح للمبتدئ</h3>
+    <ul>
+      <li>الأغنية كلها تقريباً على وترين فقط: <strong style="color:var(--gold-light);">و٣ ري</strong> و<strong style="color:var(--green-light);">و٤ صول</strong> – ركز عليهم أولاً</li>
+      <li>مي♭ = الدستان الأول على وتر ري – ضع إصبعك قريب من الملوي (العتبة)</li>
+      <li>كل سطر ينتهي بـ "ي" (دروبي، صوبي، ثوبي...) = نغمة فا مطولة على و٣ دستان ٣</li>
+      <li>السطور الطويلة (لا جابه الحظ...) = ثلاث وقفات – لا تتسرع</li>
+      <li>ابدأ بدون غناء حتى تثبت أصابعك، ثم أضف الكلمات</li>
+      <li>430 Hz = توليف محمد عبده الكلاسيكي – أنت على الطريق الصح</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>نوتة تعليمية تقريبية · الورد – عباس إبراهيم · مقام البياتي على ري · 430 Hz</footer>
+
+</body>
+</html>
